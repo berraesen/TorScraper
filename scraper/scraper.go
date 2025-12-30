@@ -9,20 +9,19 @@ import (
 )
 
 func NewClient() (*http.Client, error) {
-	// SOCKS5 proxy ayarı
+
 	dialer, err := proxy.SOCKS5("tcp", "127.0.0.1:9150", nil, proxy.Direct)
 	if err != nil {
 		return nil, err
 	}
 
-	// Özel transport (IP sızıntısını engeller)
 	transport := &http.Transport{
 		Dial: dialer.Dial,
 	}
 
 	client := &http.Client{
 		Transport: transport,
-		Timeout:   20 * time.Second, // timeout önemli
+		Timeout:   20 * time.Second,
 	}
 
 	return client, nil
